@@ -121,14 +121,18 @@ enum InuLocale {
   ${_l.join(",\n  ")};
 
   /// accepts a lang code in the format "en_US"
-  static Inu? select(String langCode) =>
-        InuLocale.values
+  static Inu? select([String? langCode]) {
+        langCode ??= InuLocale.langCode;
+        return InuLocale.values
           .where((e) => e.name == langCode)
           .firstOrNull?.inu;
+  }
 
   Inu get inu => switch (this) {
       ${_l.map((e) => "InuLocale.$e => const _${e.replaceAll("_", "").capitalize()}()").join(",\n      ")},
     };
+
+  static String? langCode;
 }
 
 abstract ${renderBody()}
